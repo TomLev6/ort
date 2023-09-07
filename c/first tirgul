@@ -1,0 +1,98 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+#include <string.h>
+
+
+//#define MAX_PLACE 18
+void quadformula(int a, int b, int c);
+void q1(int num);
+void q2(char s1, char s2, char s3);
+void q3(char name[], float age, float youngerAge);
+void q4(char tav);
+int q5(int n);
+void q6(float a, float b, float c, float d);
+int main()
+{
+    //q1(1);
+    //q2('a', 'b', 'c');
+    //q3("tom",10.5,8.5);
+    //q4("$");
+    //printf("%d",q5(5));
+    q6(4, 6, 5, 1);
+    //quadformula(1, 2, 1);
+    return 0;
+   
+}
+float max(float a[], int length)
+{
+    int i, max=a[0];
+    for (i = 0; i < length; i++)
+    {
+        if (a[i] > max) max = a[i];
+    }
+    return max;
+}
+float low(float a, float b)
+{
+    if (a > b) return a;
+    return b;
+}
+void quadformula(int a, int b, int c)
+{
+    double d = b * b - 4 * a * c;
+    if (d > 0)
+    {
+        double res1 = - b + sqrt(d) / (2 * a);
+        double res2 = + b + sqrt(d) / (2 * a);
+        printf("%f, %f" ,res1, res2);
+    }
+    else
+    {
+        printf("zero solution!");
+    }
+}
+void q1(int num)
+{
+    printf("%d\n", num);
+    printf("%d\n", num + 2);
+    printf("%d\n", num * 3);
+    printf("%d\n", num + 2 + num * 3 + num);
+}
+void q2(char s1, char s2, char s3)
+{
+    printf("%c %c %c\n", s1, s2, s3);
+    printf("%c %c %c", s3, s2, s1);
+}
+void q3(char name[], float age, float youngerAge)
+{
+    printf("%s %f", name, age - youngerAge);
+}
+void q4(char ch)
+{    
+    printf("%c\n", ch);
+    printf("%c %c\n", ch, ch);
+    printf("%c %c %c\n", ch, ch, ch);   
+}
+int q5(int n)
+{
+    int sum = 1;
+    int i = n;
+    for (i = 1; i <= n; i++)
+    {
+        sum *= i;
+    }
+    return sum;
+}
+void q6(float a, float b, float c, float d)
+{
+    float arr[] = { a,b,c,d };
+    int i;
+    for ( i = 3; i > -1; i--)
+    {
+        arr[i] = max(arr, 4);
+        printf("%f\n", arr[i]);
+    }
+  
+}
