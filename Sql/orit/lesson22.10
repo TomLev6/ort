@@ -13,3 +13,8 @@ SELECT * FROM Employees
  ORDER BY BirthDate;
 
 5.
+
+
+
+---
+SELECT * FROM Customers WHERE Country NOT LIKE "%a%";
