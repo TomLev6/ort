@@ -1,0 +1,15 @@
+1.
+SELECT Employee ID, First Name, Last Name FROM Employees;
+
+2.
+SELECT ProductName, UnitPrice, UnitPrice * 0.9 FROM Products;
+
+3.
+SELECT ProductName FROM Products
+ ORDER BY ProductName DESC, Qunatity;
+
+4.
+SELECT * FROM Employees
+ ORDER BY BirthDate;
+
+5.
