@@ -1,17 +1,17 @@
 #include <stdio.h>
 #pragma warning(disable:4996)
-#define N 5;
+#define N 5
 
-void print(int a[][5]);
-void print90cw(int a[][5]);
+void print(int a[][N]);
+void print90cw(int a[][N]);
 int main() {
-	int arr2d[5][5];
+	int arr2d[N][N];
 	int i, j;
-	for (i = 0; i < 5; i++)
+	for (i = 0; i < N; i++)
 	{
-		for ( j = 0; j < 5; j++)
+		for ( j = 0; j < N; j++)
 		{
-			scanf("%d", &arr2d[i][j]);
+			scanf("%i", &arr2d[i][j]);
 		}
 	}
 	print(arr2d);
@@ -19,24 +19,24 @@ int main() {
 	print90cw(arr2d);
 	return 0;
 }
-void print(int a[][5]) {
+void print(int a[][N]) {
 	int row, col;
 
-	for ( col = 0; col < 5; col++)
+	for ( col = 0; col < N; col++)
 	{
-		for ( row = 0; row < 5; row++)
+		for ( row = 0; row < N; row++)
 		{
 			printf("%i\t", a[row][col]);
 		}
 		printf("\n");
 	}
 }
-void print90cw(int a[][5]) {
+void print90cw(int a[][N]) {
 	int row, col;
 
-	for (col = 0; col < 5; col++)
+	for (col = 0; col < N; col++)
 	{
-		for (row = 4; row >= 0; row--)
+		for (row = N-1; row >= 0; row--)
 		{
 			printf("%i\t", a[row][col]);
 		}
