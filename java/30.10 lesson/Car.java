@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Car
+public class Car implements Comparable<Car>
 {
     protected String brand;
     protected Integer year;
@@ -48,5 +48,17 @@ public class Car
     public int hashCode() {
         return Objects.hash(brand, year, lPlate);
     }
+    public int compareTo(Car c){
+        // return this.brand.compareTo(c.getBrand());
+        return this.year - c.getYear();
+    }
 
+    @Override
+    public String toString() {
+        return "Car{" +
+                "brand='" + brand + '\'' +
+                ", year=" + year +
+                ", lPlate='" + lPlate + '\'' +
+                '}';
+    }
 }
