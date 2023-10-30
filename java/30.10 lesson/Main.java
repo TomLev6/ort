@@ -21,7 +21,7 @@ public class Main {
             System.out.println(c);
         }
         for (Map.Entry<String, Car> entry: map.entrySet()) {
-            System.out.println(entry);
+            System.out.println(entry.getKey() + " drives " + entry.getValue().getBrand());
         }
     }
 }
