@@ -28,10 +28,16 @@ public class Main {
         for (Map.Entry<String, Car> entry: map.entrySet()) {
             System.out.println(entry.getKey() + " drives " + entry.getValue().getBrand());
         }
+
         System.out.println(arr);
-        System.out.println("\n");
-        Collections.sort(arr);
+        Collections.sort(arr, new Comparator<Car>() {
+            @Override
+            public int compare(Car c1, Car c2) {
+                return c1.getYear()-c2.getYear();
+            }
+        });
         System.out.println(arr);
 
     }
+
 }
