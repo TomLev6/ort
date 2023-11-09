@@ -6,7 +6,7 @@
 
 #define N 6
 int Neigbers(int a[N][N], int i, int j);
-void GameOfLife(int a[N][N]);
+void GameOfLife(int a[N][N],int b[N][N]);
 int main() {
 	int a[N][N] = { 0 };
 	
@@ -15,8 +15,8 @@ int main() {
 	a[3][2] = 1;
 
 	a[2][4] = 1;
-	a[3][1] = 1;
-	a[3][4] = 1;
+	a[2][2] = 1;
+	a[3][3] = 1;
 
 	a[2][1] = 1;
 
@@ -97,6 +97,7 @@ void GameOfLife(int a[N][N], int b[N][N]) {
 					b[i][j] = 1;
 				}
 			}
+			else { b[i][j] = a[i][j]; }
 		}
 	}
 }
