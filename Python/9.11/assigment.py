@@ -1,8 +1,37 @@
-class Book:
+
+class Clock:
+    max_sec = 60
+    max_min = 60
+    max_hours = 24
+
     def __init__(self):
-        self.book_name = ""
-        self.copies = 0
-        self.price = 40
+        self.seconds = 0
+        self.minutes = 0
+        self.hours = 0
+
+    def tick(self):
+        self.seconds += 1
+        if self.seconds == self.max_sec:
+            self.minutes += 1
+            self.seconds = 0
+            if self.minutes == self.max_min:
+                self.hours += 1
+                self.minutes = 0
+
+    def __str__(self):
+        return f"{self.hours}:{self.minutes}:{self.seconds}"
+
+    def set_all(self, sec=0, min=0, hours=0):
+        self.seconds = sec
+        self.minutes = min
+        self.hours = hours
+
+
+class Book:
+    def __init__(self, name, price, copies):
+        self.book_name = name
+        self.copies = copies
+        self.price = price
 
     def get_book_name(self):
         return self.book_name
@@ -13,7 +42,7 @@ class Book:
     def get_copies(self):
         return self.copies
 
-    def set_name(self,name):
+    def set_name(self, name):
         self.book_name = name
 
     def set_price(self, price):
@@ -37,12 +66,10 @@ class Libery:
         return [book for book in self.book_list]
 
     def add(self, book_name, price):
-        b = Book()
-        b.set_name(book_name)
-        b.set_price(price)
+        b = Book(book_name, price, copies=1)
         for book in self.book_list:
             if book_name == book.get_book_name():
-                book.set_copies(book.get_copies()+1)
+                book.set_copies(book.get_copies() + 1)
             else:
                 self.book_list.append(b)
 
@@ -54,5 +81,3 @@ class Libery:
 
     def low_copies(self, copies_amount):
         return [book.get_book_name() for book in self.book_list if book.get_copies() < copies_amount]
-
-                 
