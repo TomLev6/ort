@@ -17,3 +17,8 @@ SELECT AVG(Price), ProductID FROM [Products] GROUP BY ProductID;
 
 SELECT AVG(Price), ProductID FROM [Products] GROUP BY SupplierID;
 
+SELECT SUM(Quantity) FROM OrderDetails where OrderID = 10248;
+
+SELECT COUNT(CustomerID) AS TotalCustomers, City FROM Customers WHERE City IN ('Berlin', 'London') GROUP BY City;
+
+SELECT MIN(EmployeeID) AS LowestSalary, MAX(EmployeeID) AS HighestSalary, AVG(EmployeeID) AS AverageSalary FROM Employees;
