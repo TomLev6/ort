@@ -1,0 +1,19 @@
+תשובות למשימה	
+
+
+SELECT Quantity FROM [OrderDetails] GROUP BY OrderID;
+
+SELECT MIN(ProductID), ProductID FROM [OrderDetails] GROUP BY OrderID;
+
+SELECT MAX(ProductID), ProductID FROM [OrderDetails] GROUP BY OrderID;
+
+SELECT SUM(ProductID), ProductID FROM [OrderDetails] GROUP BY OrderID;
+
+SELECT COUNT(CustomerName), City FROM [Customers] GROUP BY City;
+
+SELECT COUNT(CustomerName), City FROM [Customers] GROUP BY Country;
+
+SELECT AVG(Price), ProductID FROM [Products] GROUP BY ProductID;
+
+SELECT AVG(Price), ProductID FROM [Products] GROUP BY SupplierID;
+
