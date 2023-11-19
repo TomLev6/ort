@@ -1,0 +1,9 @@
+
+SELECT CustomerID FROM mynorthwind.customers
+where CustomerID like "a%" or CustomerID like "g%";
+
+SELECT CustomerID FROM mynorthwind.customers
+where Country in('Germany', 'France', 'UK');
+
+SELECT CustomerID FROM mynorthwind.customers
+order by CustomerID;
