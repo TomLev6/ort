@@ -1,0 +1,10 @@
+SELECT Country FROM Suppliers;
+
+SELECT Customers.CustomerName FROM Customers
+INNER join Suppliers on Suppliers.Country =Customers.Country;
+
+SELECT CustomerName FROM Customers
+where Country in(select distinct Country FROM Suppliers);
+
+SELECT Country, CustomerName FROM Customers
+where Country like "g%" or Country like "a%";
