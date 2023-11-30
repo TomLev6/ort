@@ -129,7 +129,7 @@ int moveBooli(char board[N][N], int booliRow, int booliCol) {
 	}
 	return points;
 }
-void moveBear(char board[N][N]) {
+void moveBear(char board[N][N],int booliCol, int booliRow , int bearCol, int bearRow) {
 	// calculate the move for the bear using booli pos.
 	// updates the board with the new Bear location.
 			  // N	 S	 W	 E	 NW  NE SE	 SW
