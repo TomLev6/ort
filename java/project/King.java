@@ -52,162 +52,22 @@ public class King extends Piece {
     }
     public void threats(Board board, Spot spot) {
         Spot tmp;
-        if (spot.getX() > 0 && spot.getX() < 7 && spot.getY() > 0 && spot.getY() < 7)
-            //king not on the edges 1-6: 1-6
-        {
-            tmp = board.boxes[spot.getX()+1][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
 
-            tmp = board.boxes[spot.getX()][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
+        int[] relativeX = {1, 1, 1, 0, 0, -1, -1, -1};
+        int[] relativeY = {1, 0, -1, 1, -1, 1, 0, -1};
 
-            tmp = board.boxes[spot.getX()+1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
+        for (int k = 0; k < relativeX.length; k++) {
+            int newX = spot.getX() + relativeX[k];
+            int newY = spot.getY() + relativeY[k];
 
-            tmp = board.boxes[spot.getX()-1][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
+            if (isValidPosition(newX, newY)) {
+                tmp = board.boxes[newX][newY];
+                tmp.getPiece().setSafe(tmp.getPiece().isWhite() == spot.getPiece().isWhite());
+            }
         }
-        //king on the upper row without corners 1-6:0
-        else if(spot.getX() > 0 && spot.getX() < 7 && spot.getY() == 0){
-
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-        }
-        //king on the upper row without corners 1-6:7
-        else if(spot.getX() > 0 && spot.getX() < 7 && spot.getY() == 7){
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-        }
-        //king on the left column without corners 0:1-6
-        else if(spot.getX() == 0 && spot.getY() > 0 && spot.getY() < 7){
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-        }
-        //king on the left column without corners 7:1-6
-        else if(spot.getX() == 7 && spot.getY() > 0 && spot.getY() < 7) {
-
-            tmp = board.boxes[spot.getX()][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-        }
-        //corners - king on the right upper corner 7:0
-        else if (spot.getX() == 7 && spot.getY() == 0) {
-
-            tmp = board.boxes[spot.getX()][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-
-        }
-        //corners - king on the right lower corner 7:7
-        else if (spot.getX() == 7 && spot.getY() == 7) {
-
-            tmp = board.boxes[spot.getX()][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-        }
-        //corners - king on the left upper corner 0:0
-        else if (spot.getX() == 0 && spot.getY() == 0) {
-
-            tmp = board.boxes[spot.getX()][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-        }
-        //corners - king on the left lower corner 0:7
-        else if (spot.getX() == 0 && spot.getY() == 7) {
-
-            tmp = board.boxes[spot.getX()][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-        }
+    }
+    private boolean isValidPosition(int x, int y) {
+        return x >= 0 && x < 8 && y >= 0 && y < 8;
     }
 
     public void isCastlingMove(Spot start, Spot end,Board board)
