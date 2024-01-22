@@ -21,164 +21,19 @@ public class Knight extends Piece {
     }
     public void threats(Board board, Spot spot) {
         Spot tmp;
-        // knight on the 2-5:2-5
-        if (spot.getX() > 1 && spot.getX() < 6 && spot.getY() > 1 && spot.getY() < 6){
 
-            tmp = board.boxes[spot.getX()+2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-        }
-        // knight on the 1:2-5
-        else if (spot.getX() == 1 && spot.getY() > 1 && spot.getY() < 6){
-            
-            tmp = board.boxes[spot.getX()+2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-        }
-        // knight on the 6:2-5
-        else if (spot.getX() == 6 && spot.getY() > 1 && spot.getY() < 6){
-            
-            tmp = board.boxes[spot.getX()-2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-        }
-        // knight on the 2-5:1
-        else if (spot.getX() > 1 && spot.getX() < 6 && spot.getY() == 1){
-
-            tmp = board.boxes[spot.getX()+2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-        }
-        // knight on the 2-5:6
-        else if (spot.getX() > 1 && spot.getX() < 6 && spot.getY() == 6){
-
-                tmp = board.boxes[spot.getX()+2][spot.getY()+1];
-                tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-                tmp = board.boxes[spot.getX()-2][spot.getY()+1];
-                tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-                tmp = board.boxes[spot.getX()+2][spot.getY()-1];
-                tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-                tmp = board.boxes[spot.getX()-1][spot.getY()-2];
-                tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-                tmp = board.boxes[spot.getX()+1][spot.getY()-2];
-                tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-                tmp = board.boxes[spot.getX()-2][spot.getY()-1];
-                tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-        }
-        // knight on the 2-5:0
-        else if (spot.getX() > 1 && spot.getX() < 6 && spot.getY() == 0){
-
-            tmp = board.boxes[spot.getX()+2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-            
-            tmp = board.boxes[spot.getX()-1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-           
-        }
-        // knight on the 2-5:7
-        else if (spot.getX() > 1 && spot.getX() < 6 && spot.getY() == 7){
-
-            tmp = board.boxes[spot.getX()+2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()-2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-        }
-        else if (spot.getY() > 1 && spot.getY() < 6 && spot.getX() == 0){
-
-            tmp = board.boxes[spot.getX()+2][spot.getY()+1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-            
-            tmp = board.boxes[spot.getX()+2][spot.getY()-1];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()-2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
-            tmp = board.boxes[spot.getX()+1][spot.getY()+2];
-            tmp.getPiece().setSafe((tmp.getPiece().isWhite()) == (spot.getPiece().isWhite()));
-
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                if (Math.abs(i * j) == 2 && isValidPosition(spot.getX() + i, spot.getY() + j)) {
+                    tmp = board.boxes[spot.getX() + i][spot.getY() + j];
+                    tmp.getPiece().setSafe(tmp.getPiece().isWhite() == spot.getPiece().isWhite());
+                }
+            }
         }
     }
+
+    private boolean isValidPosition(int x, int y) {
+        return x >= 0 && x < 8 && y >= 0 && y < 8;
+    }
+
 }
