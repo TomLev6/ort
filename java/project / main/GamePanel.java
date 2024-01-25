@@ -12,6 +12,9 @@ public class GamePanel extends JPanel implements Runnable{
     Board board = new Board();
     Mouse mouse = new Mouse();
 
+    // for th ai part
+    public static int totalMoves = 0;
+    
     // pieces
     public static ArrayList<Piece> pieces = new ArrayList<>(); // backup list in case we want to reset
     public static ArrayList<Piece> simPieces = new ArrayList<>();
@@ -508,6 +511,7 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
         }
+        totalMoves++;
         activeP = null;
     }
     private boolean canPromote(){
