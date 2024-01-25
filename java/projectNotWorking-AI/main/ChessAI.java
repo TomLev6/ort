@@ -1,6 +1,8 @@
 package main;
 import piece.*;
 
+import java.util.Random;
+
 public class ChessAI {
     // Constants for piece values
     private static final int PAWN_VALUE = 1;
@@ -13,6 +15,7 @@ public class ChessAI {
     public static void findNextMove(){
         Piece opponentMovedPiece = whichPieceMoved();
         Piece aiMovingPiece = GamePanel.simPieces.get(23);
+        Random rand = new Random();
         if (GamePanel.totalMoves==1){
             if (opponentMovedPiece.type == Type.PAWN){
                 // let's find out which pawn have moved
@@ -62,9 +65,28 @@ public class ChessAI {
                 // we need to move some piece to protect it
                 for (Piece piece: GamePanel.simPieces){
                     // we simulate moves that can be helping us protect the piece
-                    if (piece.color==GamePanel.BLACK&&piece.canMove(GamePanel.threatendAIPiece.col,GamePanel.threatendAIPiece.row)){
-                        piece.col =
-                        GamePanel.treatendAIPieceIsDefended = true;
+                    if (piece.color==GamePanel.BLACK&&!piece.canMove(GamePanel.threatendAIPiece.col,GamePanel.threatendAIPiece.row)){
+                        while(GamePanel.treatendAIPieceIsDefended){
+                            // Generate random integers in range 0 to 9
+                            int rand_col = rand.nextInt(8);
+                            int rand_row = rand.nextInt(8);
+                            if (piece.canMove(rand_col,rand_row)){
+                                piece.col = rand_col;
+                                piece.row = rand_row;
+                                if (piece.canMove(GamePanel.threatendAIPiece.col,GamePanel.threatendAIPiece.row)){
+                                    GamePanel.treatendAIPieceIsDefended = true;
+                                    return;
+                                }
+                                else {
+                                    piece.col = piece.preCol;
+                                    piece.row = piece.preRow;
+
+                                }
+                            }
+
+                        }
+
+
                     }
                 }
             }
@@ -117,7 +139,7 @@ public class ChessAI {
         }
         return MovedPiece;
     }
-    public static Move generateLegalMove(){
+    public static void generateLegalMove(){
 
     }
     public int evaluateBoard() {
