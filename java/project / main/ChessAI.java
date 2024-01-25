@@ -10,7 +10,13 @@ public class ChessAI {
     private static final int QUEEN_VALUE = 9;
     private static final int KING_VALUE = 90;
 
-
+  public Piece nextMove(){
+    if (GamePanel.totalMoves==1)
+    {
+        if (GamePanel.simPieces)
+            
+        }
+    }
     public int evaluateBoard(Board board) {
         int score = 0;
 
