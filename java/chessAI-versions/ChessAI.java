@@ -14,6 +14,7 @@ public class ChessAI {
     private static final int QUEEN_VALUE = 9;
     private static final int KING_VALUE = 90;
     public static Move targetMove = new Move(0,0);
+    public static Move lastMove= new Move(0,0);;
     public static ArrayList<Move> movesMadeSoFar = new ArrayList<>();
     public static Piece AIpiece=null;
 
@@ -56,14 +57,19 @@ public class ChessAI {
                 }
             }
             // second or more move
-
             // let's see if we can capture
             else {
                 Move AImove = findMostValuableSquare();
+                if (lastMove.equals(AImove)){
+                    while (lastMove.equals(AImove)){
+                        AImove = findMostValuableSquare();
+                    }
+                }
+                lastMove = AImove;
                 GamePanel.activeP = AIpiece;
                 AIpiece.col = AImove.getCol();
                 AIpiece.row = AImove.getRow();
-//                System.out.println("found move ! move value:    " + AImove.moveValue +" ," +AIpiece.type + " -> " + AImove.getCol() + " : " + AImove.getRow());
+                System.out.println("found move ! move value:    " + AImove.moveValue +" ," +AIpiece.type + " -> " + AImove.getCol() + " : " + AImove.getRow());
                 movesMadeSoFar.add(AImove);
                 foundMove = true;
             }
@@ -240,26 +246,28 @@ public class ChessAI {
     }
 
     public static ArrayList<Move> showLegalMoves(Piece blackPiece){
+        //TODO: GETTING ALL OF THE POSSIBLE MOVES, STILL RECEIVING A LACK OF MOVES
         // gets a piece and return a list of all the legal moves
         ArrayList<Move> moves = new ArrayList<>();
-        for (int col=0;col<8;col++){
-            for (int row=0;row<8;row++){
-                if (blackPiece.canMove(col,row)){
-                    targetMove.setCol(col);
-                    targetMove.setRow(row);
-                    if (!moves.contains(targetMove)){
+        for (int col = 0; col < 8; col++) {
+            for (int row = 0; row < 8; row++) {
+                if (blackPiece.canMove(col, row)) {
+                    Move targetMove = new Move(col, row);
+                    if (!moves.contains(targetMove)) {
                         moves.add(targetMove);
                     }
                 }
             }
         }
-        for (Move move:moves){
-            System.out.println( blackPiece.type + "-> " + move.getCol() + " : " + move.getRow());
-        }
+//        for (Move move:moves){
+//            System.out.println( blackPiece.type + "-> " + move.getCol() + " : " + move.getRow());
+//        }
         return moves;
     }
 
     public static Move findMostValuableSquare() {
+        // TODO: if the king is in check
+
         Move defaultMove = new Move(0,0);
         int maxMoveValue = 1;
         for (Piece blackPiece : GamePanel.simPieces) {
@@ -283,12 +291,12 @@ public class ChessAI {
                                 }
                             }
                             // develop
-                            if ((move.getCol() > 0 && move.getCol() < 7 && (move.getRow() == 1 || move.getRow() == 6))) {
-                                currentMoveValue = 1;
+                            if ((move.getCol() > 0 && move.getCol() < 6 && (move.getRow() >= 0 || move.getRow() == 6))) {
+                                currentMoveValue = 3;
                             }
                             break;
                         case KNIGHT:
-                            if (move.getCol() > 1 && move.getCol() < 6 && move.getRow() > 1 && move.getRow() < 4) {
+                            if (move.getCol() > 1 && move.getCol() < 6 && move.getRow() == 2) {
                                 currentMoveValue = 5;
                                 break;
                             }
@@ -298,7 +306,7 @@ public class ChessAI {
                                     // we might, can capture
                                     if (getPieceValue(blackPiece)+3<getPieceValue(whitePiece)){
                                         if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
-                                            currentMoveValue = 6;
+                                            currentMoveValue = 7;
 
                                         }
                                     }
@@ -306,7 +314,7 @@ public class ChessAI {
                             }
                             break;
                         case PAWN:
-                            if (move.getCol() > 2 && move.getCol() < 5 && move.getRow() == 3) {
+                            if (move.getCol() > 2 && move.getCol() < 5 && move.getRow() > 2&& move.getRow() <5) {
                                 currentMoveValue = 5;
                             }
                             // possible capture
@@ -321,13 +329,13 @@ public class ChessAI {
                                     }
                                     else if (getPieceValue(blackPiece)+3<getPieceValue(whitePiece)){
                                         if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
-                                            currentMoveValue = 7;
+                                            currentMoveValue = 6;
 
                                         }
                                     }
-                                        else if (getPieceValue(blackPiece)+1<getPieceValue(whitePiece)){
+                                        else {
                                             if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
-                                                currentMoveValue = 7;
+                                                currentMoveValue = 5;
 
                                             }
                                         }
@@ -335,7 +343,7 @@ public class ChessAI {
                             }
                             break;
                         case BISHOP:
-                            if (move.getCol() > 1 && move.getCol() < 6 && move.getRow() > 1 && move.getRow() < 4) {
+                            if (move.getCol() > 1 && move.getCol() < 6 && move.getRow() > 1 && move.getRow() < 4&& !blackPiece.moved) {
                                 currentMoveValue = 3;
                                 break;
                             }
@@ -353,39 +361,38 @@ public class ChessAI {
                             }
                             break;
                         case KING:
-                            if (GamePanel.totalMoves>10){
-                                System.out.println("KING    " + move.getCol() +" :"  + move.getRow() + "   |  " + blackPiece.col +" :"  + blackPiece.row );
-                                if ((move.getCol() == 3 ||move.getCol() == 4) && (move.getRow() == 3 || move.getRow() ==4)) {
-                                    // win move
-                                    currentMoveValue = 9;
-                                    break;
-                                }
-                                else if (move.getCol() == blackPiece.col && move.getRow() > blackPiece.row) {
-                                    // move towards the middle vertically
-                                    currentMoveValue = 6;
-                                    break;
-                                }
+                           if (isSafeSquare(move)){
+                               if ((move.getCol() == 3 ||move.getCol() == 4) && (move.getRow() == 3 || move.getRow() ==4)) {
+                                   // win move
+                                   currentMoveValue = 9;
+                                   break;
+                               }
+                               else if (move.getCol() == blackPiece.col && move.getRow() > blackPiece.row) {
+                                   // move towards the middle vertically
+                                   currentMoveValue = 6;
+                                   break;
+                               }
 //                                else if (move.getCol() > 2 && move.getCol() < 6 && move.getRow() > 0) {
 //                                    //
 //                                    currentMoveValue = 3;
 //
 //                                }
-                                // possible capture
-                                for (Piece whitePiece: GamePanel.simPieces){
-                                    if (whitePiece.color==GamePanel.WHITE){
-                                        // we might, can capture
-                                        if (2<getPieceValue(whitePiece)){
-                                            if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
-                                                currentMoveValue = 3;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                               // possible capture
+                               for (Piece whitePiece: GamePanel.simPieces){
+                                   if (whitePiece.color==GamePanel.WHITE){
+                                       // we might, can capture
+                                       if (2<getPieceValue(whitePiece)){
+                                           if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
+                                               currentMoveValue = 5;
+                                           }
+                                       }
+                                   }
+                               }
+                           }
                           break;
                         case QUEEN:
-                            if ((move.getCol() > 1 && move.getCol() < 6 && (move.getRow() > 0 || move.getRow() < 6))) {
-                                currentMoveValue = 1;
+                            if ((move.getCol() > 1 && move.getCol() < 6 && (move.getRow() > 0 || move.getRow() < 6))&&!blackPiece.moved) {
+                                currentMoveValue = 2;
                             }
                             // possible capture
                             for (Piece whitePiece: GamePanel.simPieces){
@@ -393,7 +400,7 @@ public class ChessAI {
                                     // we might, can capture
                                     if (4<getPieceValue(whitePiece)){
                                         if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
-                                            currentMoveValue = 3;
+                                            currentMoveValue = 4;
                                         }
                                     }
                                 }
@@ -418,6 +425,37 @@ public class ChessAI {
         return defaultMove;
     }
 
+    public static boolean AIkingInCheck(){
+        Piece blackKing=null;
+        for (Piece blackPiece: GamePanel.simPieces){
+            if (blackPiece.color==GamePanel.BLACK){
+                if (blackPiece.type==Type.KING){
+                    blackKing=blackPiece;
+                }
+            }
+        }
+        if (blackKing!=null){
+            for (Piece whitePiece: GamePanel.simPieces){
+                if (whitePiece.color==GamePanel.WHITE){
+                    if (whitePiece.canMove(blackKing.col, blackKing.row)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean isSafeSquare(Move move){
+        for (Piece whitePiece: GamePanel.simPieces){
+            if (whitePiece.color==GamePanel.WHITE){
+                if (whitePiece.canMove(move.getCol(), move.getRow())){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public void search(int depth) {
         // evaluate the position after every move
         int score = evaluateMaterial();
