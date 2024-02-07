@@ -56,149 +56,48 @@ public class ChessAI {
                     }
                 }
             }
+
             // second or more move
-            // let's see if we can capture
             else {
-                Move AImove = findMostValuableSquare();
-                if (lastMove.equals(AImove)){
-                    while (lastMove.equals(AImove)){
-                        AImove = findMostValuableSquare();
+                Piece king;
+                Move kingLocation = new Move(0,0);
+                for (Piece piece:GamePanel.simPieces){
+                    if (piece.type == Type.KING && piece.color==GamePanel.BLACK){
+                        king = piece;
+                        kingLocation.setCol(piece.col);
+                        kingLocation.setRow(piece.row);
                     }
                 }
-                lastMove = AImove;
-                GamePanel.activeP = AIpiece;
-                AIpiece.col = AImove.getCol();
-                AIpiece.row = AImove.getRow();
-                System.out.println("found move ! move value:    " + AImove.moveValue +" ," +AIpiece.type + " -> " + AImove.getCol() + " : " + AImove.getRow());
-                movesMadeSoFar.add(AImove);
-                foundMove = true;
+                if (!isSafeSquare(kingLocation)){
+                    // king is in check
+                    // king must move or piece must block the check
+                    System.out.println("KIng in check!!");
+                    while (!isSafeSquare(kingLocation)){
+
+                        Move AImove = findMostValuableSquare();
+
+                    }
+                }
+                else {
+                    Move AImove = findMostValuableSquare();
+                    if (lastMove.equals(AImove)){
+                        while (lastMove.equals(AImove)){
+                            AImove = findMostValuableSquare();
+                        }
+                    }
+                    lastMove = AImove;
+                    GamePanel.activeP = AIpiece;
+                    AIpiece.col = AImove.getCol();
+                    AIpiece.row = AImove.getRow();
+                    System.out.println("found move ! move value:    " + AImove.moveValue +" ," +AIpiece.type + " -> " + AImove.getCol() + " : " + AImove.getRow());
+                    movesMadeSoFar.add(AImove);
+                    foundMove = true;
+                }
             }
         }
     }
 
-//    public static void findNextMove(){
-//        // TODO: need to add when piece can capture, and when the king is in check + change the target to checkmate
-//        boolean foundMove = false;
-//        while(!foundMove){
-//            if (GamePanel.totalMoves<30)
-//            {
-//                if (GamePanel.totalMoves>4){
-//                    // let's check if there is a possible capture
-//                    for (Piece pieceB: GamePanel.simPieces){
-//                        if (pieceB.color==GamePanel.BLACK){
-//                            for (Piece pieceW: GamePanel.simPieces){
-//                                if (pieceW.color==GamePanel.WHITE){
-//                                    if (pieceB.canMove(pieceW.col,pieceW.row)){
-//                                        // there is a white piece black can capture
-//                                        targetMove.setCol(pieceW.col);
-//                                        targetMove.setRow(pieceW.row);
-//                                        if (!movesMadeSoFar.contains(targetMove)){
-//                                            GamePanel.activeP = pieceB;
-//                                            movesMadeSoFar.add(targetMove);
-//                                            foundMove = true;
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                            // no legal move -> not possible!
-//                        }
-//                    }
-//                }
-//                if (GamePanel.totalMoves>8){
-//                    //we can bring out the bishop and the queen too
-//                    for (Piece piece: GamePanel.simPieces){
-//                        if (piece.type==Type.BISHOP&&piece.color==GamePanel.BLACK&&!piece.moved){
-//                            targetMove = findMostValuableSquare(piece);
-//                            if (targetMove.getCol()!=0&&targetMove.getRow()!=0){
-//                                piece.col = targetMove.getCol();
-//                                piece.row = targetMove.getRow();
-//                                if (!movesMadeSoFar.contains(targetMove)){
-//                                    GamePanel.activeP = piece;
-//                                    movesMadeSoFar.add(targetMove);
-//                                    foundMove = true;
-//
-//                                }
-//                            }
-//                            // no legal move -> not possible!
-//                        }
-//                    }
-//                    for (Piece piece: GamePanel.simPieces){
-//                        if (piece.type==Type.QUEEN&&piece.color==GamePanel.BLACK&&!piece.moved){
-//                            targetMove = findMostValuableSquare(piece);
-//                            if (targetMove.getCol()!=0&&targetMove.getRow()!=0){
-//                                piece.col = targetMove.getCol();
-//                                piece.row = targetMove.getRow();
-//                                if (!movesMadeSoFar.contains(targetMove)){
-//                                    GamePanel.activeP = piece;
-//                                    movesMadeSoFar.add(targetMove);
-//                                    foundMove = true;
-//
-//                                }
-//                            }
-//                            // no legal move -> not possible!
-//                        }
-//                    }
-//                }
-//                else {
-//                    // only the opening moves
-//                    Random rand = new Random();
-//                    int pieceRandom = rand.nextInt(0,10);
-//                    if (pieceRandom%2==0){
-//                        // knight
-//                        for (Piece piece: GamePanel.simPieces){
-//                            if (piece.type==Type.KNIGHT&&piece.color==GamePanel.BLACK&&!piece.moved){
-//                                targetMove = findMostValuableSquare(piece);
-//                                if (targetMove.getCol()!=0&&targetMove.getRow()!=0){
-//                                    piece.col = targetMove.getCol();
-//                                    piece.row = targetMove.getRow();
-//                                    if (!movesMadeSoFar.contains(targetMove)){
-//                                        GamePanel.activeP = piece;
-//                                        movesMadeSoFar.add(targetMove);
-//                                        foundMove = true;
-//
-//                                    }
-//                                }
-//                                // no legal move -> not possible!
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        // pawn move
-//                        for (Piece piece: GamePanel.simPieces){
-//                            if (piece.type==Type.PAWN&&piece.color==GamePanel.BLACK&&piece.col>2&&piece.col<5){
-//                                targetMove = findMostValuableSquare(piece);
-//                                if (targetMove.moveValue>2){
-//                                    piece.col = targetMove.getCol();
-//                                    piece.row = targetMove.getRow();
-//                                    if (!movesMadeSoFar.contains(targetMove)){
-//                                        GamePanel.activeP = piece;
-//                                        movesMadeSoFar.add(targetMove);
-//                                        foundMove = true;
-//
-//                                    }
-//                                }
-//                                // no legal move -> not possible!
-//                            }
-//                            else if (piece.type==Type.PAWN&&piece.color==GamePanel.BLACK&&piece.col>1&&piece.col<6){
-//                                targetMove = findMostValuableSquare(piece);
-//                                if (targetMove.moveValue>0){
-//                                    piece.col = targetMove.getCol();
-//                                    piece.row = targetMove.getRow();
-//                                    if (!movesMadeSoFar.contains(targetMove)){
-//                                        GamePanel.activeP = piece;
-//                                        movesMadeSoFar.add(targetMove);
-//                                        foundMove = true;
-//
-//                                    }
-//                                }
-//                                // no legal move -> not possible!
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+      // TODO: need to add when piece can capture, and when the king is in check + change the target to checkmate
 
     public static Piece whichPieceMoved() {
         // detects which piece has been moved
@@ -333,12 +232,12 @@ public class ChessAI {
 
                                         }
                                     }
-                                        else {
-                                            if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
-                                                currentMoveValue = 5;
+                                    else {
+                                        if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
+                                            currentMoveValue = 5;
 
-                                            }
                                         }
+                                    }
                                 }
                             }
                             break;
@@ -357,39 +256,56 @@ public class ChessAI {
 
                                         }
                                     }
+                                    else if (getPieceValue(blackPiece)<=getPieceValue(whitePiece)){
+                                        if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
+                                            currentMoveValue = 4;
+
+                                        }
+                                    }
                                 }
                             }
                             break;
                         case KING:
-                           if (isSafeSquare(move)){
-                               if ((move.getCol() == 3 ||move.getCol() == 4) && (move.getRow() == 3 || move.getRow() ==4)) {
-                                   // win move
-                                   currentMoveValue = 9;
-                                   break;
-                               }
-                               else if (move.getCol() == blackPiece.col && move.getRow() > blackPiece.row) {
-                                   // move towards the middle vertically
-                                   currentMoveValue = 6;
-                                   break;
-                               }
-//                                else if (move.getCol() > 2 && move.getCol() < 6 && move.getRow() > 0) {
-//                                    //
-//                                    currentMoveValue = 3;
-//
-//                                }
-                               // possible capture
-                               for (Piece whitePiece: GamePanel.simPieces){
-                                   if (whitePiece.color==GamePanel.WHITE){
-                                       // we might, can capture
-                                       if (2<getPieceValue(whitePiece)){
-                                           if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
-                                               currentMoveValue = 5;
-                                           }
-                                       }
-                                   }
-                               }
-                           }
-                          break;
+                            if (isSafeSquare(move)){
+                                System.out.println("Safe square.." + move.toStr());
+                                if ((move.getCol() == 3 ||move.getCol() == 4) && (move.getRow() == 3 || move.getRow() ==4)) {
+                                    // win move
+                                    currentMoveValue = 9;
+                                    break;
+                                }
+                                else if (move.getCol() == blackPiece.col && move.getRow() > blackPiece.row) {
+                                    // move towards the middle vertically
+                                    currentMoveValue = 5;
+                                    break;
+                                }
+                                // possible capture
+                                for (Piece whitePiece: GamePanel.simPieces){
+                                    if (whitePiece.color==GamePanel.WHITE){
+                                        // we might, can capture
+                                        if (5<getPieceValue(whitePiece)){
+                                            if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
+                                                currentMoveValue = 7;
+                                            }
+                                        }
+                                        else if (3<getPieceValue(whitePiece)){
+                                            if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
+                                                currentMoveValue = 4;
+                                            }
+                                        }
+                                        else if (1<getPieceValue(whitePiece)){
+                                            if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
+                                                currentMoveValue = 3;
+                                            }
+                                        }
+                                        else{
+                                            if (blackPiece.canMove(whitePiece.col, whitePiece.row)){
+                                                currentMoveValue = 4;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            break;
                         case QUEEN:
                             if ((move.getCol() > 1 && move.getCol() < 6 && (move.getRow() > 0 || move.getRow() < 6))&&!blackPiece.moved) {
                                 currentMoveValue = 2;
@@ -421,7 +337,6 @@ public class ChessAI {
                 }
             }
         }
-//        System.out.println("returns.....  max value: " + maxMoveValue+ "  new move: " + defaultMove.toStr() + "  for " + AIpiece.type );
         return defaultMove;
     }
 
@@ -451,6 +366,13 @@ public class ChessAI {
             if (whitePiece.color==GamePanel.WHITE){
                 if (whitePiece.canMove(move.getCol(), move.getRow())){
                     return false;
+                }
+                else if (whitePiece.type==Type.PAWN){
+                    // pawn check
+                    if ((move.getCol()==whitePiece.col+1&&move.getRow()==whitePiece.row-1)
+                            ||(move.getCol()==whitePiece.col-1&&move.getRow()==whitePiece.row-1)){
+                        return false;
+                    }
                 }
             }
         }
