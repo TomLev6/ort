@@ -2,6 +2,7 @@ package main;
 import piece.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable{
     public static int totalMoves = 1;
     public static ArrayList<Move> moves= new ArrayList<>(); // list of all of the moves
     public static ArrayList<String> movesPlayed= new ArrayList<>();
+    public static String gameSoFar = "1. ";
     public static Map<Piece,Move> pieceAndMoves = new HashMap<>(); // piece and its last move
     boolean notRepeatedMove=true;
 
@@ -29,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
     public static ArrayList<Piece> simPieces = new ArrayList<>();
     ArrayList<Piece> promoPieces = new ArrayList<>();
     Piece checkingP;
-    public static Piece castlingP, threatendAIPiece,activeP;
+    public static Piece castlingP,activeP;
 
     // color
     public static final int WHITE=0;
@@ -127,14 +129,18 @@ public class GamePanel extends JPanel implements Runnable{
             lastTime =currentTime;
 
             if (delta>=1){
-                update();
+                try {
+                    update();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 repaint(); // this is calling the 'paintComponent' method
                 delta--;
             }
 
         }
     }
-    private void update(){
+    private void update() throws IOException {
         if (promotion){
             promoting();
         }
@@ -247,7 +253,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
     }
-    private void moveAiPieceSimulation(){
+    private void moveAiPieceSimulation() throws IOException {
         // TODO: remove duplicates moves (moves that repeat them self,(getting same col and row))
         // TODO: when capturing a piece remove it
         canMove = false;
@@ -619,9 +625,15 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
         }
-        totalMoves++;
+
         movesPlayed.add(whichPieceMoved().get(activeP));
-        System.out.println(whichPieceMoved().get(activeP));
+        gameSoFar += whichPieceMoved().get(activeP) + " ";
+        if (totalMoves%2==0){
+            gameSoFar+= (totalMoves/2 + 1) + ". " ;
+            System.out.println(gameSoFar);
+        }
+
+        totalMoves++;
         activeP = null;
     }
     private boolean canPromote(){
