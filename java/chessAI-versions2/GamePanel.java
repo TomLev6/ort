@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements Runnable{
     // for th ai part
     public static int totalMoves = 1;
     public static ArrayList<Move> moves= new ArrayList<>(); // list of all of the moves
-    public static ArrayList<Move> simMoves= new ArrayList<>();
+    public static ArrayList<String> movesPlayed= new ArrayList<>();
     public static Map<Piece,Move> pieceAndMoves = new HashMap<>(); // piece and its last move
     boolean notRepeatedMove=true;
 
@@ -253,22 +253,22 @@ public class GamePanel extends JPanel implements Runnable{
         canMove = false;
         validSquare = false;
         copyPieces(pieces,simPieces);
-        System.out.println("finding next move..");
+//        System.out.println("finding next move..");
 
         ChessAI.findMove();
 
-        System.out.println(activeP.canMove(activeP.col,activeP.row));
+//        System.out.println(activeP.canMove(activeP.col,activeP.row));
         if (activeP.canMove(activeP.col,activeP.row))
         {
-            System.out.println("generate the move:  " + activeP.col + ":" + activeP.row + " for: " + activeP.type + "   move number: " + totalMoves);
+//            System.out.println("generate the move:  " + activeP.col + ":" + activeP.row + " for: " + activeP.type + "   move number: " + totalMoves);
             canMove = true;
             // if hitting a piece , remove it from the list
-            System.out.println(activeP.hittingP);
+//            System.out.println(activeP.hittingP);
             if (activeP.hittingP!=null){
                 if (activeP.type==Type.KING){
                     Move kingCaptureMove = new Move(activeP.col,activeP.row);
                     if (ChessAI.isSafeSquare(kingCaptureMove)){
-                        System.out.println("hitting a piece");
+//                        System.out.println("hitting a piece");
                         simPieces.remove(activeP.hittingP.getIndex());
                         activeP.hittingP.col = 100;
                         activeP.hittingP.row = 100;
@@ -277,7 +277,7 @@ public class GamePanel extends JPanel implements Runnable{
                     }
                 }
                 else {
-                    System.out.println("hitting a piece");
+//                    System.out.println("hitting a piece");
                     simPieces.remove(activeP.hittingP.getIndex());
                     activeP.hittingP.col = 100;
                     activeP.hittingP.row = 100;
@@ -620,6 +620,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         totalMoves++;
+        movesPlayed.add(whichPieceMoved().get(activeP));
         System.out.println(whichPieceMoved().get(activeP));
         activeP = null;
     }
