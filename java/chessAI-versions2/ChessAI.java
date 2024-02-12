@@ -1,6 +1,10 @@
 package main;
 import piece.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IllegalFormatCodePointException;
@@ -80,6 +84,16 @@ public class ChessAI {
 
     public static String[][] boardState= new String[8][8];
 //    public static boolean kingInCheck=false;
+
+    public String loadFile() throws FileNotFoundException {
+        File file = new File(
+                "src\\db\\pgn-extract-17-21\\pgn-extract\\test\\outfiles\\1.txt\"");
+        BufferedReader br
+                = new BufferedReader(new FileReader(file));
+
+    }
+
+
 
     public static void setFENBoard(){
         int space=0;
@@ -162,7 +176,7 @@ public class ChessAI {
                             targetMove.setCol(3);
                             targetMove.setRow(3);
 
-                            System.out.println("found move ! move value:    " + targetMove.moveValue +" ," +piece.type + " -> " + targetMove.getCol() + " : " + targetMove.getRow());
+//                            System.out.println("found move ! move value:    " + targetMove.moveValue +" ," +piece.type + " -> " + targetMove.getCol() + " : " + targetMove.getRow());
                             GamePanel.activeP = piece;
                             GamePanel.activeP.col = targetMove.getCol();
                             GamePanel.activeP.row = targetMove.getRow();
@@ -174,7 +188,7 @@ public class ChessAI {
                             targetMove.setCol(4);
                             targetMove.setRow(3);
 
-                            System.out.println("found move ! move value:    " + targetMove.moveValue +" ," +piece.type + " -> " + targetMove.getCol() + " : " + targetMove.getRow());
+//                            System.out.println("found move ! move value:    " + targetMove.moveValue +" ," +piece.type + " -> " + targetMove.getCol() + " : " + targetMove.getRow());
                             GamePanel.activeP = piece;
                             GamePanel.activeP.col = targetMove.getCol();
                             GamePanel.activeP.row = targetMove.getRow();
@@ -235,7 +249,7 @@ public class ChessAI {
                 }
                 lastMove = AImove;
                 simAIMove(AImove);
-                System.out.println("found move ! move value:    " + AImove.moveValue +" ," +AIpiece.type + " -> " + AImove.getCol() + " : " + AImove.getRow());
+//                System.out.println("found move ! move value:    " + AImove.moveValue +" ," +AIpiece.type + " -> " + AImove.getCol() + " : " + AImove.getRow());
                 movesMadeSoFar.add(AImove);
                 foundMove = true;
 
@@ -252,6 +266,9 @@ public class ChessAI {
 
     }
     // TODO: need to add when piece can capture, and when the king is in check + change the target to checkmate
+
+
+
     public static Piece getKing()
     {
         for (Piece piece:GamePanel.simPieces){
@@ -298,7 +315,13 @@ public class ChessAI {
                 boardCol = "h";
                 break;
         }
-        return boardCol+(8-row);
+        if (GamePanel.activeP!=null&&GamePanel.activeP.type==Type.PAWN){
+            return boardCol+(8-row);
+        }
+       else {
+            assert GamePanel.activeP != null;
+            return pieceTypeToStr(GamePanel.activeP)+boardCol+(8-row);
+        }
     }
     public static ArrayList<Move> showLegalMoves(Piece blackPiece){
         //TODO: GETTING ALL OF THE POSSIBLE MOVES, STILL RECEIVING A LACK OF MOVES
