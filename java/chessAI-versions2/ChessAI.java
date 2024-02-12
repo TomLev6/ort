@@ -1,10 +1,9 @@
 package main;
 import piece.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.IllegalFormatCodePointException;
@@ -85,11 +84,9 @@ public class ChessAI {
     public static String[][] boardState= new String[8][8];
 //    public static boolean kingInCheck=false;
 
-    public String loadFile() throws FileNotFoundException {
-        File file = new File(
-                "src\\db\\pgn-extract-17-21\\pgn-extract\\test\\outfiles\\1.txt\"");
-        BufferedReader br
-                = new BufferedReader(new FileReader(file));
+    public static String loadFile() throws IOException {
+
+        return new String(Files.readAllBytes(Paths.get("src\\db\\1.txt")));
 
     }
 
@@ -161,7 +158,7 @@ public class ChessAI {
         }
         return " ";
     }
-    public static void findMove() {
+    public static void findMove() throws IOException {
        /*
        first checking if we can move our king one more step towards the middle squares.
        second if we can't move the king we decide what piece we should move.
@@ -198,7 +195,8 @@ public class ChessAI {
                         }
                     }
                 }
-                setFENBoard();
+//                System.out.println(loadFile());
+//                setFENBoard();
             }
 
             // second or more move
