@@ -34,14 +34,22 @@ void AddEdge(Graph* g, int x, int y, int w) {
 		printf("source vertex does not exist");
 	}
 }
-void RemoveEdge(int mat[MAX_V][MAX_V], int x, int y) {
-	if (mat[y][x] != 0) {
-		mat[y][x] = 0;
+void RemoveEdge(Graph* g, int x, int y) {
+	if (!g->mat[x]) {
+		g->mat[x][y] = 0;
+	}
+	else
+	{
+		printf("vertex does not exist");
 	}
 }
-void UpdateEdge(int mat[MAX_V][MAX_V], int x, int y, int w) {
-	if (mat[y][x] != 0) {
-		mat[y][x] = w;
+void UpdateEdge(Graph* g, int x, int y, int w) {
+	if (g->mat[x]) {
+		g->mat[x][y] = w;
+	}
+	else
+	{
+		printf("vertex does not exist");
 	}
 }
 
